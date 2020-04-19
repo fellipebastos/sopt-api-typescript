@@ -1,0 +1,33 @@
+version: '3'
+networks:
+  database:
+services:
+  db:
+    container_name: sopt-api_database
+    image: mysql:5.7
+    volumes:
+      - $PWD/src/database/init.sql:/data/application/init.sql
+      - $HOME/docker-databases/sopt-api-2:/var/lib/mysql
+    ports:
+      - 3307:3306
+    command: --init-file /data/application/init.sql
+    environment:
+      MYSQL_ROOT_USER: root
+      MYSQL_ROOT_PASSWORD: root
+    networks:
+      - database
+  backend:
+    build: $PWD/docker
+    depends_on:
+      - db
+    container_name: sopt-api_backend_2
+    image: node:12.14.1
+    user: '${UID}:${UID}'
+    volumes:
+      - $PWD:/var/www
+    working_dir: /var/www
+    ports:
+      - 3333:3333
+    command: bash -c "yarn && yarn dev:server"
+    networks:
+      - database
