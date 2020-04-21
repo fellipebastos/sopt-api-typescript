@@ -3,31 +3,34 @@ networks:
   database:
 services:
   db:
-    container_name: sopt-api_database
+    container_name: sopt-api-typescript-database
     image: mysql:5.7
-    volumes:
-      - $PWD/src/database/init.sql:/data/application/init.sql
-      - $HOME/docker-databases/sopt-api-2:/var/lib/mysql
-    ports:
-      - 3307:3306
-    command: --init-file /data/application/init.sql
     environment:
       MYSQL_ROOT_USER: root
       MYSQL_ROOT_PASSWORD: root
+    ports:
+      - 3307:3306
+    volumes:
+      - $HOME/docker-databases/sopt-api-typescript:/var/lib/mysql
+      - $PWD/src/database/init.sql:/data/application/init.sql
+    command: --init-file /data/application/init.sql
     networks:
       - database
   backend:
     build: $PWD/docker
     depends_on:
       - db
-    container_name: sopt-api_backend_2
+    # links:
+    #   - "db"
+    container_name: sopt-api-typescript-backend
     image: node:12.14.1
     user: '${UID}:${UID}'
     volumes:
+      - $PWD/docker/wait-for-it.sh:/usr/local/bin/wait-for-it.sh
       - $PWD:/var/www
     working_dir: /var/www
     ports:
       - 3333:3333
-    command: bash -c "yarn && yarn dev:server"
+    command: bash -c "wait-for-it.sh db:3306 --timeout=300 && yarn && yarn dev:server"
     networks:
       - database
