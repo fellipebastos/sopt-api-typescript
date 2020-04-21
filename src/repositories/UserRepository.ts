@@ -9,7 +9,7 @@ class UserRepository extends Repository<User> {
    */
   public async findByEmail(
     email: string,
-    ignoreId = null as string | null,
+    ignoreId = '',
   ): Promise<User | undefined> {
     const user = await this.findOne({ where: { email, id: Not(ignoreId) } });
 
