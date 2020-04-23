@@ -2,10 +2,10 @@ import { Router } from 'express';
 
 import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 
-import sessionsRouter from './sessions.routes';
-import usersRouter from './users.routes';
-import shipCompaniesRouter from './shipCompanies.routes';
 import companiesRouter from './companies.routes';
+import sessionsRouter from './sessions.routes';
+import shipCompaniesRouter from './shipCompanies.routes';
+import usersRouter from './users.routes';
 
 const routes = Router();
 

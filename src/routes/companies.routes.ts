@@ -3,6 +3,8 @@ import { Router } from 'express';
 import { getCustomRepository } from 'typeorm';
 import httpCode from 'http-status-codes';
 
+import productsRouter from './products.routes';
+
 import CompanyRepository from '../repositories/CompanyRepository';
 
 import CreateCompanyService from '../services/Company/CreateCompanyService';
@@ -62,5 +64,7 @@ companiesRouter.delete('/:id', async (request, response) => {
 
   return response.status(httpCode.NO_CONTENT).send();
 });
+
+companiesRouter.use('/:id/products', productsRouter);
 
 export default companiesRouter;
