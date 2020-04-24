@@ -23,9 +23,12 @@ class CreateProductService {
   }: Request): Promise<Product> {
     const productRepository = getCustomRepository(ProductRepository);
 
-    const foundProduct = await productRepository.findByCode(code);
+    const foundProduct = await productRepository.findByCodeAndCompany(
+      code,
+      company_id,
+    );
 
-    if (foundProduct && foundProduct.company_id === company_id) {
+    if (foundProduct) {
       throw new AppError(
         'Este código já está sendo utilizado por outro produto dessa indústria.',
         httpCode.CONFLICT,

@@ -10,7 +10,7 @@ import UpdateProductService from '../services/Product/UpdateProductService';
 import ShowProductService from '../services/Product/ShowProductService';
 import DeleteProductService from '../services/Product/DeleteProductService';
 
-const productsRouter = Router();
+const productsRouter = Router({ mergeParams: true });
 
 productsRouter.get('/', async (request, response) => {
   const productRepository = getCustomRepository(ProductRepository);
@@ -22,18 +22,19 @@ productsRouter.get('/', async (request, response) => {
   return response.json(products);
 });
 
-productsRouter.get('/:id', async (request, response) => {
-  const { id } = request.params;
+productsRouter.get('/:product_id', async (request, response) => {
+  const { product_id } = request.params;
 
   const showUser = new ShowProductService();
 
-  const user = await showUser.execute({ id });
+  const user = await showUser.execute({ id: product_id });
 
   return response.json(user);
 });
 
 productsRouter.post('/', async (request, response) => {
-  const { code, description, value, company_id } = request.body;
+  const { code, description, value } = request.body;
+  const { id: company_id } = request.params;
 
   const createProduct = new CreateProductService();
 
@@ -47,14 +48,14 @@ productsRouter.post('/', async (request, response) => {
   return response.json(product);
 });
 
-productsRouter.put('/:id', async (request, response) => {
-  const { id } = request.params;
-  const { code, description, value, company_id } = request.body;
+productsRouter.put('/:product_id', async (request, response) => {
+  const { id: company_id, product_id } = request.params;
+  const { code, description, value } = request.body;
 
   const updateProduct = new UpdateProductService();
 
   const product = await updateProduct.execute({
-    id,
+    id: product_id,
     code,
     description,
     value,
@@ -64,12 +65,12 @@ productsRouter.put('/:id', async (request, response) => {
   return response.json(product);
 });
 
-productsRouter.delete('/:id', async (request, response) => {
-  const { id } = request.params;
+productsRouter.delete('/:product_id', async (request, response) => {
+  const { product_id } = request.params;
 
   const deleteProduct = new DeleteProductService();
 
-  await deleteProduct.execute({ id });
+  await deleteProduct.execute({ id: product_id });
 
   return response.status(httpCode.NO_CONTENT).send();
 });
