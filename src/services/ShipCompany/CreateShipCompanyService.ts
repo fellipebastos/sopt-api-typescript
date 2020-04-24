@@ -1,13 +1,9 @@
-import { getCustomRepository } from 'typeorm';
+import { getRepository } from 'typeorm';
 import httpCode from 'http-status-codes';
 
 import AppError from '../../errors/AppError';
 
-import ShipCompanyRepository from '../../repositories/ShipCompanyRepository';
-
 import ShipCompany from '../../models/ShipCompany';
-
-import slugify from '../../utils/slugify';
 
 interface Request {
   name: string;
@@ -16,11 +12,11 @@ interface Request {
 
 class CreateShipCompanyService {
   public async execute({ name, phone }: Request): Promise<ShipCompany> {
-    const shipCompanyRepository = getCustomRepository(ShipCompanyRepository);
+    const shipCompanyRepository = getRepository(ShipCompany);
 
-    const hasShipCompany = await shipCompanyRepository.findBySlug(
-      slugify(name),
-    );
+    const hasShipCompany = await shipCompanyRepository.findOne({
+      where: { name },
+    });
 
     if (hasShipCompany) {
       throw new AppError(

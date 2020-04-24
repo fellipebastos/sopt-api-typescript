@@ -18,10 +18,6 @@ export default class CreateCompanies1587677805304
             type: 'varchar',
           },
           {
-            name: 'slug',
-            type: 'varchar',
-          },
-          {
             name: 'created_at',
             type: 'timestamp',
             default: 'now()',

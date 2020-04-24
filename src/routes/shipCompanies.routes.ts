@@ -1,9 +1,9 @@
 /* eslint-disable no-param-reassign */
 import { Router } from 'express';
-import { getCustomRepository } from 'typeorm';
+import { getRepository } from 'typeorm';
 import httpCode from 'http-status-codes';
 
-import ShipCompanyRepository from '../repositories/ShipCompanyRepository';
+import ShipCompany from '../models/ShipCompany';
 
 import CreateShipCompanyService from '../services/ShipCompany/CreateShipCompanyService';
 import UpdateShipCompanyService from '../services/ShipCompany/UpdateShipCompanyService';
@@ -13,7 +13,7 @@ import DeleteShipCompanyService from '../services/ShipCompany/DeleteShipCompanyS
 const shipCompaniesRouter = Router();
 
 shipCompaniesRouter.get('/', async (request, response) => {
-  const shipCopmanyRepository = getCustomRepository(ShipCompanyRepository);
+  const shipCopmanyRepository = getRepository(ShipCompany);
 
   const shipCompanies = await shipCopmanyRepository.find({
     order: { name: 'ASC' },

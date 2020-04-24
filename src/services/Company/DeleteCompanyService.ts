@@ -1,6 +1,6 @@
-import { getCustomRepository } from 'typeorm';
+import { getRepository } from 'typeorm';
 
-import CompanyRepository from '../../repositories/CompanyRepository';
+import Company from '../../models/Company';
 
 import ShowCompanyService from './ShowCompanyService';
 
@@ -10,7 +10,7 @@ interface Request {
 
 class DeleteCompanyService {
   public async execute({ id }: Request): Promise<void> {
-    const companyRepository = getCustomRepository(CompanyRepository);
+    const companyRepository = getRepository(Company);
 
     const showCompany = new ShowCompanyService();
 

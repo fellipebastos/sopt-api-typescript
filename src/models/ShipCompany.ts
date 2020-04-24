@@ -20,9 +20,6 @@ class ShipCompany {
   name: string;
 
   @Column()
-  slug: string;
-
-  @Column()
   phone: string;
 
   @CreateDateColumn()

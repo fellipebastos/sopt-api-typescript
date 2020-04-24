@@ -1,11 +1,11 @@
 /* eslint-disable no-param-reassign */
 import { Router } from 'express';
-import { getCustomRepository } from 'typeorm';
+import { getRepository } from 'typeorm';
 import httpCode from 'http-status-codes';
 
 import productsRouter from './products.routes';
 
-import CompanyRepository from '../repositories/CompanyRepository';
+import Company from '../models/Company';
 
 import CreateCompanyService from '../services/Company/CreateCompanyService';
 import UpdateCompanyService from '../services/Company/UpdateCompanyService';
@@ -15,7 +15,7 @@ import DeleteCompanyService from '../services/Company/DeleteCompanyService';
 const companiesRouter = Router();
 
 companiesRouter.get('/', async (request, response) => {
-  const companyRepository = getCustomRepository(CompanyRepository);
+  const companyRepository = getRepository(Company);
 
   const companies = await companyRepository.find({
     order: { name: 'ASC' },

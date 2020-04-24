@@ -1,13 +1,9 @@
-import { getCustomRepository } from 'typeorm';
+import { getRepository } from 'typeorm';
 import httpCode from 'http-status-codes';
 
 import AppError from '../../errors/AppError';
 
-import CompanyRepository from '../../repositories/CompanyRepository';
-
 import Company from '../../models/Company';
-
-import slugify from '../../utils/slugify';
 
 interface Request {
   name: string;
@@ -15,9 +11,9 @@ interface Request {
 
 class CreateCompanyService {
   public async execute({ name }: Request): Promise<Company> {
-    const companyRepository = getCustomRepository(CompanyRepository);
+    const companyRepository = getRepository(Company);
 
-    const hasCompany = await companyRepository.findBySlug(slugify(name));
+    const hasCompany = await companyRepository.findOne({ where: { name } });
 
     if (hasCompany) {
       throw new AppError(

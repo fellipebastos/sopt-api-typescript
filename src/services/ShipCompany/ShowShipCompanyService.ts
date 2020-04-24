@@ -1,9 +1,7 @@
-import { getCustomRepository } from 'typeorm';
+import { getRepository } from 'typeorm';
 import httpCode from 'http-status-codes';
 
 import AppError from '../../errors/AppError';
-
-import ShipCompanyRepository from '../../repositories/ShipCompanyRepository';
 
 import ShipCompany from '../../models/ShipCompany';
 
@@ -13,7 +11,7 @@ interface Request {
 
 class ShowShipCompanyService {
   public async execute({ id }: Request): Promise<ShipCompany> {
-    const shipCompanyRepository = getCustomRepository(ShipCompanyRepository);
+    const shipCompanyRepository = getRepository(ShipCompany);
 
     const shipCompany = await shipCompanyRepository.findOne(id);
 

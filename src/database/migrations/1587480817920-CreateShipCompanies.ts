@@ -18,10 +18,6 @@ export default class CreateShipCompanies1587480817920
             type: 'varchar',
           },
           {
-            name: 'slug',
-            type: 'varchar',
-          },
-          {
             name: 'phone',
             type: 'varchar',
             isNullable: true,

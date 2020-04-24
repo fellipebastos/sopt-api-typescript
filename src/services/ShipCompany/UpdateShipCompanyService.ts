@@ -1,13 +1,9 @@
-import { getCustomRepository } from 'typeorm';
+import { getRepository, Not } from 'typeorm';
 import httpCode from 'http-status-codes';
 
 import AppError from '../../errors/AppError';
 
-import ShipCompanyRepository from '../../repositories/ShipCompanyRepository';
-
 import ShipCompany from '../../models/ShipCompany';
-
-import slugify from '../../utils/slugify';
 
 interface Request {
   id: string;
@@ -17,7 +13,7 @@ interface Request {
 
 class UpdateShipCompanyService {
   public async execute({ id, name, phone }: Request): Promise<ShipCompany> {
-    const shipCompanyRepository = getCustomRepository(ShipCompanyRepository);
+    const shipCompanyRepository = getRepository(ShipCompany);
 
     const updateShipCompany = await shipCompanyRepository.preload({
       id,
@@ -29,10 +25,9 @@ class UpdateShipCompanyService {
       throw new AppError('Transportadora não encontrada.', httpCode.NOT_FOUND);
     }
 
-    const shipCompanySlugExists = await shipCompanyRepository.findBySlug(
-      slugify(name),
-      id,
-    );
+    const shipCompanySlugExists = await shipCompanyRepository.findOne({
+      where: { name, id: Not(id) },
+    });
 
     if (shipCompanySlugExists || !updateShipCompany) {
       throw new AppError(

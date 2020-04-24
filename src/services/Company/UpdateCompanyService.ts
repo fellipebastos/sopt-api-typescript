@@ -1,13 +1,9 @@
-import { getCustomRepository } from 'typeorm';
+import { getRepository, Not } from 'typeorm';
 import httpCode from 'http-status-codes';
 
 import AppError from '../../errors/AppError';
 
-import CompanyRepository from '../../repositories/CompanyRepository';
-
 import Company from '../../models/Company';
-
-import slugify from '../../utils/slugify';
 
 interface Request {
   id: string;
@@ -16,7 +12,7 @@ interface Request {
 
 class UpdateCompanyService {
   public async execute({ id, name }: Request): Promise<Company> {
-    const companyRepository = getCustomRepository(CompanyRepository);
+    const companyRepository = getRepository(Company);
 
     const updateCompany = await companyRepository.preload({
       id,
@@ -27,10 +23,9 @@ class UpdateCompanyService {
       throw new AppError('Indústria não encontrada.', httpCode.NOT_FOUND);
     }
 
-    const companySlugExists = await companyRepository.findBySlug(
-      slugify(name),
-      id,
-    );
+    const companySlugExists = await companyRepository.findOne({
+      where: { name, id: Not(id) },
+    });
 
     if (companySlugExists || !updateCompany) {
       throw new AppError(
