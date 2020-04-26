@@ -6,15 +6,16 @@ import ShowProductService from './ShowProductService';
 
 interface Request {
   id: string;
+  company_id: string;
 }
 
 class DeleteProductService {
-  public async execute({ id }: Request): Promise<void> {
+  public async execute({ id, company_id }: Request): Promise<void> {
     const productRepository = getCustomRepository(ProductRepository);
 
     const showProduct = new ShowProductService();
 
-    await showProduct.execute({ id });
+    await showProduct.execute({ id, company_id });
 
     await productRepository.delete(id);
   }

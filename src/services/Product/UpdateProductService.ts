@@ -37,7 +37,7 @@ class UpdateProductService {
       throw new AppError('Produto não encontrado.', httpCode.NOT_FOUND);
     }
 
-    const productExists = await productRepository.findByCodeAndCompany(
+    const productExists = await productRepository.findByCode(
       code,
       company_id,
       id,

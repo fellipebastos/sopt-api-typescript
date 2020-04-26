@@ -1,34 +1,53 @@
-import { EntityRepository, Repository, Not } from 'typeorm';
+import { EntityRepository, Repository, SelectQueryBuilder } from 'typeorm';
 
 import Product from '../models/Product';
 
 @EntityRepository(Product)
 class ProductRepository extends Repository<Product> {
   /**
-   * Find company product by code.
+   * Where has company query.
    */
-  public async findByCodeAndCompany(
-    code: string,
+  private whereHasCompany(company_id: string): SelectQueryBuilder<Product> {
+    return this.createQueryBuilder('product').where({ company_id });
+  }
+
+  /**
+   * Find product by company id.
+   */
+  public async findByCompany(company_id: string): Promise<Product[]> {
+    const products = await this.whereHasCompany(company_id)
+      .orderBy('code', 'ASC')
+      .getMany();
+
+    return products;
+  }
+
+  /**
+   * Find product by company id.
+   */
+  public async findOneByCompany(
+    id: string,
     company_id: string,
-    ignoreId = '',
   ): Promise<Product | undefined> {
-    const product = await this.findOne({
-      where: { code, company_id, id: Not(ignoreId) },
-    });
+    const product = await this.whereHasCompany(company_id)
+      .andWhere('product.id = :id', { id })
+      .getOne();
 
     return product;
   }
 
   /**
-   * Find company product by id.
+   * Find company product by code.
    */
-  public async findByIdAndCompany(
-    id: string,
+  public async findByCode(
+    code: string,
     company_id: string,
+    ignore_id = '',
   ): Promise<Product | undefined> {
-    const product = await this.findOne({
-      where: { id, company_id },
-    });
+    const product = await this.whereHasCompany(company_id)
+      .andWhere('code = :code', { code })
+      .andWhere('id != :ignore_id', { ignore_id })
+      .getOne();
 
     return product;
   }

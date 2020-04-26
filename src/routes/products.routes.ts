@@ -13,23 +13,23 @@ import DeleteProductService from '../services/Product/DeleteProductService';
 const productsRouter = Router({ mergeParams: true });
 
 productsRouter.get('/', async (request, response) => {
+  const { id: company_id } = request.params;
+
   const productRepository = getCustomRepository(ProductRepository);
 
-  const products = await productRepository.find({
-    order: { code: 'ASC' },
-  });
+  const products = await productRepository.findByCompany(company_id);
 
   return response.json(products);
 });
 
 productsRouter.get('/:product_id', async (request, response) => {
-  const { product_id } = request.params;
+  const { id: company_id, product_id } = request.params;
 
-  const showUser = new ShowProductService();
+  const showProduct = new ShowProductService();
 
-  const user = await showUser.execute({ id: product_id });
+  const product = await showProduct.execute({ id: product_id, company_id });
 
-  return response.json(user);
+  return response.json(product);
 });
 
 productsRouter.post('/', async (request, response) => {
@@ -66,11 +66,11 @@ productsRouter.put('/:product_id', async (request, response) => {
 });
 
 productsRouter.delete('/:product_id', async (request, response) => {
-  const { product_id } = request.params;
+  const { id: company_id, product_id } = request.params;
 
   const deleteProduct = new DeleteProductService();
 
-  await deleteProduct.execute({ id: product_id });
+  await deleteProduct.execute({ id: product_id, company_id });
 
   return response.status(httpCode.NO_CONTENT).send();
 });

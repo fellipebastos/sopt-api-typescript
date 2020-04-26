@@ -23,10 +23,7 @@ class CreateProductService {
   }: Request): Promise<Product> {
     const productRepository = getCustomRepository(ProductRepository);
 
-    const foundProduct = await productRepository.findByCodeAndCompany(
-      code,
-      company_id,
-    );
+    const foundProduct = await productRepository.findByCode(code, company_id);
 
     if (foundProduct) {
       throw new AppError(
