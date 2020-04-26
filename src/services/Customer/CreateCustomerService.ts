@@ -4,6 +4,7 @@ import httpCode from 'http-status-codes';
 import AppError from '../../errors/AppError';
 
 import CustomerRepository from '../../repositories/CustomerRepository';
+import CommercialReferenceRepository from '../../repositories/CommercialReferenceRepository';
 
 import Customer from '../../models/Customer';
 
@@ -17,6 +18,7 @@ interface Request {
   email: string;
   email_nfe: string;
   email_fin: string;
+  commercial_references: string[];
 }
 
 class CreateCustomerService {
@@ -30,6 +32,7 @@ class CreateCustomerService {
     email,
     email_nfe,
     email_fin,
+    commercial_references,
   }: Request): Promise<Customer> {
     const customerRepository = getCustomRepository(CustomerRepository);
 
@@ -53,6 +56,18 @@ class CreateCustomerService {
       email_nfe,
       email_fin,
     });
+
+    if (commercial_references && commercial_references.length) {
+      const commercialReferenceRepository = getCustomRepository(
+        CommercialReferenceRepository,
+      );
+
+      const commercialReferences = await commercialReferenceRepository.findByIds(
+        commercial_references,
+      );
+
+      customer.commercial_references = commercialReferences;
+    }
 
     await customerRepository.save(customer);
 

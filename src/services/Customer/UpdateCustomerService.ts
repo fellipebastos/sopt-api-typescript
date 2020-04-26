@@ -4,6 +4,7 @@ import httpCode from 'http-status-codes';
 import AppError from '../../errors/AppError';
 
 import CustomerRepository from '../../repositories/CustomerRepository';
+import CommercialReferenceRepository from '../../repositories/CommercialReferenceRepository';
 
 import Customer from '../../models/Customer';
 
@@ -18,6 +19,7 @@ interface Request {
   email: string;
   email_nfe: string;
   email_fin: string;
+  commercial_references: string[];
 }
 
 class UpdateCustomerService {
@@ -32,6 +34,7 @@ class UpdateCustomerService {
     email,
     email_nfe,
     email_fin,
+    commercial_references,
   }: Request): Promise<Customer> {
     const customerRepository = getCustomRepository(CustomerRepository);
 
@@ -59,6 +62,18 @@ class UpdateCustomerService {
         'Este CNPJ já está sendo utilizado por outro cliente.',
         httpCode.CONFLICT,
       );
+    }
+
+    if (commercial_references && commercial_references.length) {
+      const commercialReferenceRepository = getCustomRepository(
+        CommercialReferenceRepository,
+      );
+
+      const commercialReferences = await commercialReferenceRepository.findByIds(
+        commercial_references,
+      );
+
+      updateCustomer.commercial_references = commercialReferences;
     }
 
     const customer = await customerRepository.save(updateCustomer);

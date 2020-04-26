@@ -17,7 +17,9 @@ const customersRouter = Router();
 customersRouter.get('/', async (request, response) => {
   const cutomerRepository = getCustomRepository(CustomerRepository);
 
-  const customers = await cutomerRepository.find();
+  const customers = await cutomerRepository.find({
+    order: { name: 'ASC' },
+  });
 
   return response.json(customers);
 });
@@ -43,6 +45,7 @@ customersRouter.post('/', async (request, response) => {
     email,
     email_nfe,
     email_fin,
+    commercial_references,
   } = request.body;
 
   const createUser = new CreateCustomerService();
@@ -57,6 +60,7 @@ customersRouter.post('/', async (request, response) => {
     email,
     email_nfe,
     email_fin,
+    commercial_references,
   });
 
   return response.json(customer);
@@ -74,6 +78,7 @@ customersRouter.put('/:id', async (request, response) => {
     email,
     email_nfe,
     email_fin,
+    commercial_references,
   } = request.body;
 
   const updateUser = new UpdateCustomerService();
@@ -89,6 +94,7 @@ customersRouter.put('/:id', async (request, response) => {
     email,
     email_nfe,
     email_fin,
+    commercial_references,
   });
 
   return response.json(customer);
