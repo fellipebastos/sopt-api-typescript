@@ -1,17 +1,13 @@
-import {
-  EntityRepository,
-  Repository,
-  Not,
-  SelectQueryBuilder,
-  Brackets,
-} from 'typeorm';
+import { EntityRepository, Repository, SelectQueryBuilder } from 'typeorm';
 
 import Address from '../models/Address';
 
 @EntityRepository(Address)
 class AddressRepository extends Repository<Address> {
   private whereHasCustomer(customer_id: string): SelectQueryBuilder<Address> {
-    return this.createQueryBuilder('address').where({ customer_id });
+    return this.createQueryBuilder('address')
+      .orderBy('name', 'ASC')
+      .where({ customer_id });
   }
 
   /**
