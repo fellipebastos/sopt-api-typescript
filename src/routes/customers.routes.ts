@@ -3,6 +3,8 @@ import { Router } from 'express';
 import { getCustomRepository } from 'typeorm';
 import httpCode from 'http-status-codes';
 
+import addressRouter from './addresses.routes';
+
 import CustomerRepository from '../repositories/CustomerRepository';
 
 import CreateCustomerService from '../services/Customer/CreateCustomerService';
@@ -25,9 +27,9 @@ customersRouter.get('/:id', async (request, response) => {
 
   const showUser = new ShowCustomerService();
 
-  const user = await showUser.execute({ id });
+  const customer = await showUser.execute({ id });
 
-  return response.json(user);
+  return response.json(customer);
 });
 
 customersRouter.post('/', async (request, response) => {
@@ -45,7 +47,7 @@ customersRouter.post('/', async (request, response) => {
 
   const createUser = new CreateCustomerService();
 
-  const user = await createUser.execute({
+  const customer = await createUser.execute({
     name,
     corporate_name,
     cnpj,
@@ -57,7 +59,7 @@ customersRouter.post('/', async (request, response) => {
     email_fin,
   });
 
-  return response.json(user);
+  return response.json(customer);
 });
 
 customersRouter.put('/:id', async (request, response) => {
@@ -76,7 +78,7 @@ customersRouter.put('/:id', async (request, response) => {
 
   const updateUser = new UpdateCustomerService();
 
-  const user = await updateUser.execute({
+  const customer = await updateUser.execute({
     id,
     name,
     corporate_name,
@@ -89,7 +91,7 @@ customersRouter.put('/:id', async (request, response) => {
     email_fin,
   });
 
-  return response.json(user);
+  return response.json(customer);
 });
 
 customersRouter.delete('/:id', async (request, response) => {
@@ -101,5 +103,7 @@ customersRouter.delete('/:id', async (request, response) => {
 
   return response.status(httpCode.NO_CONTENT).send();
 });
+
+customersRouter.use('/:id/addresses', addressRouter);
 
 export default customersRouter;
