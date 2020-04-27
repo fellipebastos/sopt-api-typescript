@@ -5,10 +5,10 @@ import httpCode from 'http-status-codes';
 
 import ShipCompany from '../models/ShipCompany';
 
-import CreateShipCompanyService from '../services/ShipCompany/CreateShipCompanyService';
-import UpdateShipCompanyService from '../services/ShipCompany/UpdateShipCompanyService';
-import ShowShipCompanyService from '../services/ShipCompany/ShowShipCompanyService';
-import DeleteShipCompanyService from '../services/ShipCompany/DeleteShipCompanyService';
+import CreateShipCompanyService from '../services/ShipCompany/CreateService';
+import UpdateShipCompanyService from '../services/ShipCompany/UpdateService';
+import ShowShipCompanyService from '../services/ShipCompany/ShowService';
+import DeleteShipCompanyService from '../services/ShipCompany/DeleteService';
 
 const shipCompaniesRouter = Router();
 

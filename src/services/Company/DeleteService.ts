@@ -2,7 +2,7 @@ import { getRepository } from 'typeorm';
 
 import Company from '../../models/Company';
 
-import ShowCompanyService from './ShowCompanyService';
+import ShowCompanyService from './ShowService';
 
 interface Request {
   id: string;

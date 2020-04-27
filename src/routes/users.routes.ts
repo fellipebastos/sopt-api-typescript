@@ -7,10 +7,10 @@ import uploadConfig from '../config/upload';
 
 import UserRepository from '../repositories/UserRepository';
 
-import CreateUserService from '../services/User/CreateUserService';
-import UpdateUserService from '../services/User/UpdateUserService';
-import ShowUserService from '../services/User/ShowUserService';
-import DeleteUserService from '../services/User/DeleteUserService';
+import CreateUserService from '../services/User/CreateService';
+import UpdateUserService from '../services/User/UpdateService';
+import ShowUserService from '../services/User/ShowService';
+import DeleteUserService from '../services/User/DeleteService';
 
 const usersRouter = Router();
 

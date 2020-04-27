@@ -2,7 +2,7 @@ import { getCustomRepository } from 'typeorm';
 
 import CustomerRepository from '../../repositories/CustomerRepository';
 
-import ShowCustomerService from './ShowCustomerService';
+import ShowCustomerService from './ShowService';
 
 interface Request {
   id: string;

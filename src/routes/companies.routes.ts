@@ -7,10 +7,10 @@ import productsRouter from './products.routes';
 
 import Company from '../models/Company';
 
-import CreateCompanyService from '../services/Company/CreateCompanyService';
-import UpdateCompanyService from '../services/Company/UpdateCompanyService';
-import ShowCompanyService from '../services/Company/ShowCompanyService';
-import DeleteCompanyService from '../services/Company/DeleteCompanyService';
+import CreateCompanyService from '../services/Company/CreateService';
+import UpdateCompanyService from '../services/Company/UpdateService';
+import ShowCompanyService from '../services/Company/ShowService';
+import DeleteCompanyService from '../services/Company/DeleteService';
 
 const companiesRouter = Router();
 

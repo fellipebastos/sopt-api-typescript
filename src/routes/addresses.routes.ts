@@ -5,10 +5,10 @@ import httpCode from 'http-status-codes';
 
 import AddressRepository from '../repositories/AddressRepository';
 
-import CreateAddressService from '../services/Address/CreateAddressService';
-import UpdateAddressService from '../services/Address/UpdateAddressService';
-import ShowAddressService from '../services/Address/ShowAddressService';
-import DeleteAddressService from '../services/Address/DeleteAddressService';
+import CreateAddressService from '../services/Address/CreateService';
+import UpdateAddressService from '../services/Address/UpdateService';
+import ShowAddressService from '../services/Address/ShowService';
+import DeleteAddressService from '../services/Address/DeleteService';
 
 const addressesRouter = Router({ mergeParams: true });
 

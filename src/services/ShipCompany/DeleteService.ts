@@ -2,7 +2,7 @@ import { getRepository } from 'typeorm';
 
 import ShipCompany from '../../models/ShipCompany';
 
-import ShowShipCompanyService from './ShowShipCompanyService';
+import ShowShipCompanyService from './ShowService';
 
 interface Request {
   id: string;

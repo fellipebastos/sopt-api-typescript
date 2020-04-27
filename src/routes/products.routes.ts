@@ -5,10 +5,10 @@ import httpCode from 'http-status-codes';
 
 import ProductRepository from '../repositories/ProductRepository';
 
-import CreateProductService from '../services/Product/CreateProductService';
-import UpdateProductService from '../services/Product/UpdateProductService';
-import ShowProductService from '../services/Product/ShowProductService';
-import DeleteProductService from '../services/Product/DeleteProductService';
+import CreateProductService from '../services/Product/CreateService';
+import UpdateProductService from '../services/Product/UpdateService';
+import ShowProductService from '../services/Product/ShowService';
+import DeleteProductService from '../services/Product/DeleteService';
 
 const productsRouter = Router({ mergeParams: true });
 

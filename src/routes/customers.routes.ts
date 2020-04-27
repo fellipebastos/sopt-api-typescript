@@ -7,10 +7,10 @@ import addressRouter from './addresses.routes';
 
 import CustomerRepository from '../repositories/CustomerRepository';
 
-import CreateCustomerService from '../services/Customer/CreateCustomerService';
-import UpdateCustomerService from '../services/Customer/UpdateCustomerService';
-import ShowCustomerService from '../services/Customer/ShowCustomerService';
-import DeleteCustomerService from '../services/Customer/DeleteCustomerService';
+import CreateCustomerService from '../services/Customer/CreateService';
+import UpdateCustomerService from '../services/Customer/UpdateService';
+import ShowCustomerService from '../services/Customer/ShowService';
+import DeleteCustomerService from '../services/Customer/DeleteService';
 
 const customersRouter = Router();
 

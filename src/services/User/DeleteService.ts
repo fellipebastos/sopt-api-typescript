@@ -1,14 +1,12 @@
 import { getCustomRepository } from 'typeorm';
-import fs from 'fs';
-import path from 'path';
 
 import User from '../../models/User';
 
 import UserRepository from '../../repositories/UserRepository';
 
-import ShowUserService from './ShowUserService';
-import UpdateUserService from './UpdateUserService';
-import RemoveFileService from '../File/RemoveFileService';
+import ShowUserService from './ShowService';
+import UpdateUserService from './UpdateService';
+import RemoveFileService from '../File/RemoveService';
 
 class DeleteUserService {
   protected userRepository: UserRepository;

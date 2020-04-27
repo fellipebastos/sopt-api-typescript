@@ -2,7 +2,7 @@ import { getCustomRepository } from 'typeorm';
 
 import AddressRepository from '../../repositories/AddressRepository';
 
-import ShowAddressService from './ShowAddressService';
+import ShowAddressService from './ShowService';
 
 interface Request {
   id: string;

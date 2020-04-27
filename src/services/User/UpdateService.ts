@@ -6,8 +6,8 @@ import User from '../../models/User';
 
 import UserRepository from '../../repositories/UserRepository';
 
-import ShowUserService from './ShowUserService';
-import RemoveFileService from '../File/RemoveFileService';
+import ShowUserService from './ShowService';
+import RemoveFileService from '../File/RemoveService';
 
 import AppError from '../../errors/AppError';
 
